@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+    http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+    http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+    <flow name="test" doc:name="Flow">
+        <http:listener path="/test" config-ref="httpListenerConfig" doc:name="/test" doc:id="uabuyz" />
+        <choice doc:name="Choice" doc:id="huurpi">
+            <when expression="#[attributes.queryParams.err == 'DW']" doc:name="When">
+                <raise-error type="TRANSFORMATION" doc:name="transformation" doc:id="ijmbfv" />
+            </when>
+            <otherwise>
+                <raise-error type="TIMEOUT" doc:name="timeout" doc:id="uevlmn" />
+            </otherwise>
+        </choice>
+
+        <logger doc:name="log" doc:id="tgnxcs" />
+        <error-handler>
+            <on-error-continue name="on-error-continue" doc:name="On error continue" type="TRANSFORMATION">
+                <set-payload value="there was an error!" doc:name="Set payload" doc:id="jvhdta" />
+
+            </on-error-continue>
+            <on-error-propagate name="on-error-propagate" doc:name="On error propagate">
+                <set-payload value="ERRORRRRRR!" doc:name="Set payload" doc:id="tnosqv" />
+
+            </on-error-propagate>
+        </error-handler>
+    </flow>
+
+</mule>
